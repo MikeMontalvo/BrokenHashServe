@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "5aeb78e0-6bb3-4629-820a-967759240063",
+		"name": "Broken_HashServe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Endpoint Validations",
+			"item": [
+				{
+					"name": "Post_001_CreateNew Hash",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"HashId\", jsonData);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": {{password}}\r\n}"
+						},
+						"url": {
+							"raw": "{{LocalEndpoint}}/hash",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"hash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_001_CreateNew Hash",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate a 200 was returned as expected \r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{LocalEndpoint}}/hash/{{HashId}}",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"hash",
+								"{{HashId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stats_001_Validate stats endpoint",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate endpoint properly gave a 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validate a real number for Total Requests was given.\r",
+									"pm.test(\"Total Requests Is being returned\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.TotalRequests).to.greaterThan(-1);\r",
+									"});\r",
+									"// Validate a real number for Total Requests was given.\r",
+									"\r",
+									"pm.test(\"Average Time Is being returned\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.AverageTime).to.greaterThan(-1);\r",
+									"});\r",
+									"\r",
+									"pm.globals.clear();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "password",
+								"type": "text",
+								"value": "angrymonkey"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{LocalEndpoint}}/stats",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get_001_Validate Hash's are unique",
+			"item": [
+				{
+					"name": "Post /hash1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"HashId1\", jsonData);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": {{password}}\r\n}"
+						},
+						"url": {
+							"raw": "{{LocalEndpoint}}/hash",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"hash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /hash1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate a 200 was returned as expected \r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Set Hash 1 to a variable to compare \r",
+									"var jsonData = pm.response.text();\r",
+									"pm.globals.set(\"Hash1\", jsonData);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LocalEndpoint}}/hash/{{HashId1}}",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"hash",
+								"{{HashId1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post /hash2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"HashId2\", jsonData);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"RandomPassword\"\r\n}"
+						},
+						"url": {
+							"raw": "{{LocalEndpoint}}/hash",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"hash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /hash2 and compare",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate a 200 was returned as expected \r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Set Hash 2 to a variable to compare\r",
+									"var jsonData = pm.response.text();\r",
+									"pm.globals.set(\"Hash2\", jsonData);\r",
+									"\r",
+									"// Compare Hashes.\r",
+									"pm.test(\"Are hashes unique?\", function () {\r",
+									"    let string1 = pm.globals.get(\"Hash1\");\r",
+									"    let string2 = pm.globals.get(\"Hash2\");\r",
+									"\r",
+									"    pm.expect(string1).not.eql(string2);    \r",
+									"});\r",
+									"\r",
+									"pm.globals.clear();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{LocalEndpoint}}/hash/{{HashId2}}",
+							"host": [
+								"{{LocalEndpoint}}"
+							],
+							"path": [
+								"hash",
+								"{{HashId2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET /hash (Shutdown)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate endpoint properly gave a 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.globals.clear();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "password",
+						"type": "text",
+						"value": "angrymonkey"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "shutdown"
+				},
+				"url": {
+					"raw": "{{LocalEndpoint}}/hash",
+					"host": [
+						"{{LocalEndpoint}}"
+					],
+					"path": [
+						"hash"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
